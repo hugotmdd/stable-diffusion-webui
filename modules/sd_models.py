@@ -42,6 +42,16 @@ def list_models():
         return f'{name} [{h}]'
 
     cmd_ckpt = shared.cmd_opts.ckpt
+    
+    # Modification by timour.lbtx to control main model's version 
+    main_path = '/home/timour/storage/models/stable-diffusion'
+    if not os.path.exists(shared.cmd_opts.ckpt):
+        cmd_ckpt = os.path.join(main_path,shared.cmd_opts.ckpt)
+        if not os.path.exists(cmd_ckpt):
+            print(f'The file {cmd_ckpt} does not exist')
+    else :
+        cmd_ckpt = shared.cmd_opts.ckpt
+
     if os.path.exists(cmd_ckpt):
         h = model_hash(cmd_ckpt)
         title = modeltitle(cmd_ckpt, h)
